@@ -73,6 +73,9 @@ from .geometry.volumes import (
     RepeatParametrisedVolume,
     ParallelWorldVolume,
     VolumeTreeRoot,
+    # Added volume class: imported for registration in
+    # VolumeManager.volume_types below.
+    TetrahedralMeshVolume,
 )
 from .actors.filters import get_filter_class, FilterBase, filter_classes
 from .actors.base import ActorBase
@@ -1111,6 +1114,10 @@ class VolumeManager(GateObject):
         "BooleanVolume": BooleanVolume,
         "RepeatParametrisedVolume": RepeatParametrisedVolume,
         "TesselatedVolume": TesselatedVolume,
+        # Added registration: create_volume() automatically tries both the
+        # requested type and "<type>Volume", so this single entry supports
+        # simulation.add_volume("TetrahedralMesh", name).
+        "TetrahedralMeshVolume": TetrahedralMeshVolume,
     }
 
     def __init__(self, simulation, *args, **kwargs) -> None:
